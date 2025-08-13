@@ -4,7 +4,7 @@ function ProductForm() {
 
   const [name,setName] = useState("")
   const [image,setImage] = useState("")
-  const [price,setPrice] = useState({})
+  const [price,setPrice] = useState(null)
   const [description,setDescription] = useState("")
   const [email,setEmail] = useState("")
   const [submitted, setSubmitted] = useState(false);
@@ -56,7 +56,7 @@ function submitHandle(e){
             placeholder="Enter name here"
             onChange={(e) => setName(e.target.value)}
           />
-          {submitted && !name && <p className="text-red-500 text-sm">Name is required</p> }
+          {submitted && !name && <p>Name is required</p> }
         </label>
       </div>
       <div className="input-container">
@@ -70,7 +70,7 @@ function submitHandle(e){
             placeholder="Enter image url here"
             onChange={(e) => setImage(e.target.value)}
           />
-          {submitted && !image && <p className="text-red-500 text-sm">Image is required</p>}
+          {submitted && !image && <p>Image is required</p>}
         </label>
       </div>
       <div className="input-container">
@@ -84,8 +84,8 @@ function submitHandle(e){
             placeholder="Enter price here"
             onChange={(e) => setPrice(e.target.value)}
           />
-          {submitted && price && price < 0 && <p className="text-red-500 text-sm">Price cannot be less than 0.</p>}
           {submitted && !price && <p>Price is required</p>}
+          {submitted && price && price < 0 && <p>Price cannot be less than 0.</p>}
         </label>
       </div>
       <div className="input-container">
@@ -117,7 +117,7 @@ function submitHandle(e){
           />
           {submitted && !email && <p>Email is required</p>}
           {submitted && email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
-          <p className="text-red-500 text-sm">Invalid email format.</p>}
+          <p>Invalid email format.</p>}
         </label>
       </div>
       <div className="form-actions">
