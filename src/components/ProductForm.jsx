@@ -4,10 +4,12 @@ function ProductForm() {
 
   const [name,setName] = useState("")
   const [image,setImage] = useState("")
-  const [price,setPrice] = useState(null)
+  const [price,setPrice] = useState("")
   const [description,setDescription] = useState("")
   const [email,setEmail] = useState("")
   const [submitted, setSubmitted] = useState(false);
+
+
 
 function submitHandle(e){
     e.preventDefault()
@@ -38,6 +40,13 @@ function submitHandle(e){
       Description: ${description}
       Email: ${email}`
       ); 
+
+      setName("")
+      setImage("")
+      setPrice("")
+      setDescription("")
+      setEmail("")
+      setSubmitted(false)
 
  
 }
