@@ -6,13 +6,13 @@
 
 :root {
   --primary-color: hsl(0, 60%, 20%);
-  --secondary-color: hsl(0, 60%, 35%);
+  --secondary-color: hsl(0, 0%, 0%);
   --highlight-color: antiquewhite;
 
   --text-primary-color: var(var(--primary-color));
 
-  --muted-color-100: azure;
-  --muted-color-200: rgb(166, 202, 202);
+  --muted-color-100: rgb(255, 255, 255);
+  --muted-color-200: rgb(255, 255, 255);
 }
 
 body {
