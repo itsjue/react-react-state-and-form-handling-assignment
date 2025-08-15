@@ -1,65 +1,49 @@
 import { useState } from "react";
 
 function ProductForm() {
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState({});
 
-  function isValidateEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  }
+  const [name,setName] = useState("")
+  const [image,setImage] = useState("")
+  const [price,setPrice] = useState({})
+  const [description,setDescription] = useState("")
+  const [email,setEmail] = useState("")
+  const [submitted, setSubmitted] = useState(false);
 
-  function validateForm() {
-    const newErrors = {};
-    if (!name) { 
-        newErrors.name = "Name is required.";
+function submitHandle(e){
+    e.preventDefault()
+    setSubmitted(true);
+
+    let hasError = false;
+
+    if (!name.trim()){
+      hasError = true;
     }
-    if (!image) {
-      newErrors.image = "Image URL is required";
+    if(!image.trim()){
+      hasError = true;
     }
-    if (!price) {
-      newErrors.price = "Price is required.";
-    } else if (price && price < 0) {
-      newErrors.price = "Price cannot be less than 0.";
+    if(!price.trim()){
+      hasError = true;
     }
-    if (!email) {
-      newErrors.email = "Email is required.";
-    } else if (!isValidateEmail(email)) {
-      newErrors.email = "Invalid email format.";
+    if(!description.trim()){
+      hasError = true;
     }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    if (validateForm() !== 0) {
-      return;
+    if(!image.trim()){
+      hasError = true;
     }
+    
+    !hasError && alert(
+      `Name: ${name}
+      Price: ${price}
+      Image: ${image}
+      Description: ${description}
+      Email: ${email}`
+      ); 
 
-    const newformData = {
-      name: name,
-      image: image,
-      price: price,
-      description: description,
-      email: email,
-    };
-
-    alert(JSON.stringify(newformData, null, 2));
-
-    setName("");
-    setImage("");
-    setPrice("");
-    setDescription("");
-    setEmail("");
-    setErrors({});
-  }
+ 
+}
 
   return (
-    <form className="post-form" onSubmit={handleSubmit}>
+    <form className="post-form" onSubmit={submitHandle}>
       <h1>Create Product Form</h1>
       <div className="input-container">
         <label>
@@ -68,14 +52,13 @@ function ProductForm() {
             id="name"
             name="name"
             type="text"
-            placeholder="Enter name here"
-            onChange={(event) => setName(event.target.value)}
             value={name}
+            placeholder="Enter name here"
+            onChange={(e) => setName(e.target.value)}
           />
+          {submitted && !name && <p className="text-red-500 text-sm">Name is required</p> }
         </label>
-        {errors.name && <p className="error-message">{errors.name}</p>}
       </div>
-
       <div className="input-container">
         <label>
           Image Url
@@ -83,14 +66,13 @@ function ProductForm() {
             id="image"
             name="image"
             type="text"
-            placeholder="Enter image url here"
-            onChange={(event) => setImage(event.target.value)}
             value={image}
+            placeholder="Enter image url here"
+            onChange={(e) => setImage(e.target.value)}
           />
+          {submitted && !image && <p className="text-red-500 text-sm">Image is required</p>}
         </label>
-        {errors.image && <p className="error-message">{errors.image}</p>}
       </div>
-
       <div className="input-container">
         <label>
           Price
@@ -98,32 +80,30 @@ function ProductForm() {
             id="price"
             name="price"
             type="number"
-            placeholder="Enter price here"
-            onChange={(event) => setPrice(event.target.value)}
             value={price}
+            placeholder="Enter price here"
+            onChange={(e) => setPrice(e.target.value)}
           />
+          {submitted && price && price < 0 && <p className="text-red-500 text-sm">Price cannot be less than 0.</p>}
+          {submitted && !price && <p>Price is required</p>}
         </label>
-        {errors.price && <p className="error-message">{errors.price}</p>}
       </div>
-
       <div className="input-container">
         <label>
           Description
           <textarea
             id="description"
             name="description"
-            placeholder="Enter description here"
-            onChange={(event) => setDescription(event.target.value)}
+            type="text"
             value={description}
+            placeholder="Enter description here"
+            onChange={(e) => setDescription(e.target.value)}
             rows={4}
             cols={30}
           />
+          {submitted && !description && <p>Description is required</p>}
         </label>
-        {errors.description && (
-          <p className="error-message">{errors.description}</p>
-        )}
       </div>
-
       <div className="input-container">
         <label>
           User's email
@@ -131,14 +111,15 @@ function ProductForm() {
             id="email"
             name="email"
             type="email"
-            placeholder="Enter your email here"
-            onChange={(event) => setEmail(event.target.value)}
             value={email}
+            placeholder="Enter your email here"
+            onChange={(e) => setEmail(e.target.value)}
           />
+          {submitted && !email && <p>Email is required</p>}
+          {submitted && email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
+          <p className="text-red-500 text-sm">Invalid email format.</p>}
         </label>
-        {errors.email && <p className="error-message">{errors.email}</p>}
       </div>
-
       <div className="form-actions">
         <button type="submit">Create</button>
       </div>
