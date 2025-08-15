@@ -1,5 +1,5 @@
 import "./App.css";
-import ProductForm from "./components/productForm";
+import ProductForm from "./components/ProductForm.jsx";
 
 function App() {
   return (
